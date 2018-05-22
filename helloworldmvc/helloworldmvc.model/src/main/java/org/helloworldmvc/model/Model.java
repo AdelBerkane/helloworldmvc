@@ -1,9 +1,11 @@
 package org.helloworldmvc.model;
 
 import org.helloworldmvc.Contract.IModel;
-
+import org.helloworldmvc.model.DAOHelloWorld;
 public class Model implements IModel {
 	public String getHelloWorld() {
-		return null;
+		DAOHelloWorld hw = new DAOHelloWorld();
+		hw.readFile();
+		return hw.getHelloWorldMessage();
 	}
 }

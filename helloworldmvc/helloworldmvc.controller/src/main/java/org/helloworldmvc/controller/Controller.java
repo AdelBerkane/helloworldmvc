@@ -12,6 +12,7 @@ public class Controller {
 		this.model = model;
 	}
 	public void run() {
+		
 		this.view.displayMessage(this.model.getHelloWorld());
 	}
 

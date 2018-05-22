@@ -1,30 +1,81 @@
 package org.helloworldmvc.model;
 
-public class DAOHelloWorld {
-	private static String FileName = "HelloWorld.txt";
+import java.io.BufferedReader;
+
+import java.io.FileInputStream;
+
+import java.io.FileNotFoundException;
+
+import java.io.IOException;
+
+import java.io.InputStreamReader;
+
+class DAOHelloWorld {
+
+	private static final String FileName = "HelloWorld.txt";
+
 	private static DAOHelloWorld instance = null;
+
 	private String helloWorldMessage = null;
 
-	public String getHelloWorldMessage() {
-		return helloWorldMessage;
+	DAOHelloWorld() {
+
+		this.readFile();
+
 	}
 
-	public void setHelloWorldMessage(String helloWorldMessage) {
-		this.helloWorldMessage = helloWorldMessage;
-	}
+	public static synchronized DAOHelloWorld getInstance() {
 
-	private DAOHelloWorld() {
-	}
+		if (instance == null) {
 
-	public static DAOHelloWorld getInstance() {
+			setInstance(new DAOHelloWorld());
+
+		}
+
 		return instance;
+
 	}
 
-	private static void setInstance(DAOHelloWorld instance) {
-		instance = instance;
+	private static void setInstance(final DAOHelloWorld instance) {
+
+		DAOHelloWorld.instance = instance;
+
 	}
-	private void readFile() {
-		
+
+	void readFile() {
+
+		BufferedReader buffer;
+
+		try {
+
+			buffer = new BufferedReader(new InputStreamReader(new FileInputStream(FileName)));
+
+			this.setHelloWorldMessage(buffer.readLine());
+
+			buffer.close();
+
+		} catch (final FileNotFoundException exception) {
+
+			exception.printStackTrace();
+
+		} catch (final IOException exception) {
+
+			exception.printStackTrace();
+
+		}
+
+	}
+
+	public String getHelloWorldMessage() {
+
+		return this.helloWorldMessage;
+
+	}
+
+	private void setHelloWorldMessage(final String helloWorldMessage) {
+
+		this.helloWorldMessage = helloWorldMessage;
+
 	}
 
 }
